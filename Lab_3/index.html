@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+//Code inspired by Matt Seto https://setom.github.io/index.html
+-->
+<html>
+    <head>
+        <title>Interactive Leaflet Map</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="assets/cssmain/main.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+          integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+          crossorigin=""></script>
+        <!-- Google Analytics -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+    </head>
+    <body>
+
+        <!-- Content -->
+        <div id="main" >
+            <h2 style="padding-left: 2%;"><center>Populations in Washington by County</center></h2>
+            <div id="map" style="height: 70vh;"></div>
+            <script type="text/javascript" src="map_data/states.js"></script>
+            <script type="text/javascript" src="map_data/population.js"></script>
+            <script type="text/javascript" src="assets/mymapleaflet.js"></script>
+            <h4><center>Washington State Populations by County</center></h4>
+            <h3><center> This is an interactive map that shows the names of each State when hovering, as well as the population per County in Washington State. Hover over a state to see it's name, and hover over a County in Washington State to get both name and population. Click on a State or County to zoom in.</center>
+          <hr>This map was create via LeafletJS library.</h3>
+            
+        </div>
+    </body>
+</html>
