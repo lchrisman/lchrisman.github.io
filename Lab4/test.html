@@ -64,21 +64,21 @@ body * {
 <div id='map1' class='map'></div>
 <div id='map2' class='map'></div>
 <nav id="menu"></nav>
-<button id='txtbox'><strong>Greater Seattle Region<span style="color: #fff">...   </span>|<span style="color: #fff">   ...</span>Earthquakes & Weather Data</strong><br>On the left, _________, and on the right, red circles indicate areas where earthquakes have occurred in the past month. Click on these events for more details.</button>
+<button id='txtbox'><strong>Washington State<span style="color: #fff">...   </span>|<span style="color: #fff">   ...</span>Earthquakes & Volacanoes</strong><br>On the left side of this interactive map, volcanoes are marked with green points. On the right, red circles indicate areas where earthquakes have occurred in the past month. Click on these events for more details.</button>
 
 <script>
                     mapboxgl.accessToken = 'pk.eyJ1IjoibGNocmlzbWFuIiwiYSI6ImNqbzU1a2RsZzA0ZzYza256ZzZ2OGZzd3UifQ.FlGqMWY7Rzn20B1bbLM_3g';
                     var map1Map = new mapboxgl.Map({
                     container: 'map1',
                     style: 'mapbox://styles/lchrisman/cjoy4ns0301am2rqoafdub9uy',
-                    center: [-122.433020, 47.458775],
-                    zoom: 9
+                    center: [-122.101541, 47.662296],
+                    zoom: 7
                     });
                     var map2Map = new mapboxgl.Map({
                     container: 'map2',
                     style: 'mapbox://styles/lchrisman/cjoy73h31necx2so6tiibbu47',
-                    center: [-122.433020, 47.458775],
-                    zoom: 9
+                    center: [-122.101541, 47.662296],
+                    zoom: 7
                      });
                 map2Map.on('load', function(){
                 //add a source layer for earthquakes
@@ -111,12 +111,12 @@ body * {
                 map1Map.addLayer({
                     "id":"volcanoes",
                     "type":"circle",
-                    "source":"Volcanoes",
+                    "source":"volcanoes",
                     "paint": {
-                            "circle-color": "#d62a2a",
+                            "circle-color": "#88e83e",
                             "circle-opacity": .5,
                             "circle-radius": 9,
-                            "circle-stroke-color": '#5e1616',
+                            "circle-stroke-color": '#2f5116',
                             "circle-stroke-width": 1,
                             "circle-stroke-opacity": 0.75
                         }
@@ -125,6 +125,10 @@ body * {
                 map2Map.on('click', 'equakes', function (e) {
                     var coordinates = e.features[0].geometry.coordinates.slice();
                     var description = "<p> Magnitude and Location: " + e.features[0].properties.title + " <br> Event Website: <a target = '_blank' href=' " + e.features[0].properties.url + "'> Earthquake Event</a></p>";
+
+                map1Map.on('click', 'volcanoes', function (e) {
+                	var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = "<p> Volcano Name: " + e.features[0].properties.NAME + "</p>";
                     
                     
                     // Ensure that if the map is zoomed out such that multiple
@@ -139,6 +143,13 @@ body * {
                         .setHTML(description)
                         .addTo(map2Map);
                          });
+                    //make the popup
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map1Map);
+                         });
+    
     
             //adding the Geocoding controls
             map1Map.addControl(new MapboxGeocoder({
