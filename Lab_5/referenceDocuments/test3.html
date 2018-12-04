@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Pratt Institute</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- the Geocoding Libaries -->
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+
+
+ <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+</style> 
+
+</head>
+<body>
+
+
+<style>
+body {
+    overflow: hidden;
+}
+body * {
+   -webkit-touch-callout: none;
+     -webkit-user-select: none;
+        -moz-user-select: none;
+         -ms-user-select: none;
+             user-select: none;
+}
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+.mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Times New Roman', Times, serif;
+}
+    #txtbox {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 100%;
+        height: 60px;
+        padding: 1px;
+        border: none;
+        border-radius: 4px;
+        font: 12px/20px 'Times New Roman', Times, serif;
+        font-size: 18px;
+        text-align: center;
+        color: #595959;
+        background: #ffffff;
+    }
+</style>
+
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
+
+<div id='map1' class='map'></div>
+<div id='map2' class='map'></div>
+<nav id="menu"></nav>
+
+<script>
+                    mapboxgl.accessToken = 'pk.eyJ1IjoibGNocmlzbWFuIiwiYSI6ImNqbzU1a2RsZzA0ZzYza256ZzZ2OGZzd3UifQ.FlGqMWY7Rzn20B1bbLM_3g';
+                    var prattMap = new mapboxgl.Map({
+                    container: 'map1',
+                    style: 'mapbox://styles/lchrisman/cjp72jxun1ucw2smgyvo1exjf',
+                    center: [-73.934120, 40.696781],
+                    zoom: 10
+                    });
+
+
+                //add a source layer for volcanoes
+                prattMap.addSource('volcanoes', {
+                    "type": "geojson",
+                    "data": "https://gist.githubusercontent.com/altwitt/0ca2ca03cf060190feddbe511caf1491/raw/5190f1c58f998708c06a600241281d866e4755dc/Volcanoes.geojson"
+                });
+                //add the volcanoes to the map
+                prattMap.addLayer({
+                    "id":"volcanoes",
+                    "type":"circle",
+                    "source":"volcanoes",
+                    "paint": {
+                            "circle-color": "#88e83e",
+                            "circle-opacity": .5,
+                            "circle-radius": 9,
+                            "circle-stroke-color": '#2f5116',
+                            "circle-stroke-width": 1,
+                            "circle-stroke-opacity": 0.75
+                        }
+                });
+                //Thanks to: https://www.mapbox.com/mapbox-gl-js/example/popup-on-click/ 
+
+                prattMap.on('click', 'volcanoes', function (e) {
+                	var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = "<p> Volcano Name: " + e.features[0].properties.NAME + "</p>";
+                    
+                    
+                    // Ensure that if the map is zoomed out such that multiple
+                    // copies of the feature are visible, the popup appears
+                    // over the copy being pointed to.
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+                    //make the popup
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(prattMap);
+                         });    
+    
+ 
+            // Add zoom and rotation controls to the map.
+            map2Map.addControl(new mapboxgl.NavigationControl()); document.getElementById('txtbox').addEventListener('click', function () {
+           
+ });
+    var map = new mapboxgl.Compare(map1Map, map2Map, {
+    // Set this to enable comparing two maps by mouse movement:
+    // mousemove: true
+
+
+});     
+</script>
+</body>
+</html>
